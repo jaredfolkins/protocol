@@ -60,3 +60,17 @@ func (d *Decoder) ReadUint16() int {
 
 	return int(d.bo.Uint16(buffer[:]))
 }
+
+func (d *Decoder) ReadInt64() int {
+	if d.LastError != nil {
+		return 0
+	}
+
+	buffer := make([]byte, binary.MaxVarintLen64)
+	if _, err := d.Read(buffer[:]); err != nil {
+		d.LastError = err
+		return 0
+	}
+
+	return int(d.bo.Uint64(buffer[:]))
+}

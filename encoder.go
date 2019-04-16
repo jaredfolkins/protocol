@@ -41,3 +41,10 @@ func (e *Encoder) WriteUint16(v int) {
 	e.bo.PutUint16(b[:], uint16(v))
 	e.Write(b[:])
 }
+
+func (e *Encoder) WriteInt64(v int) {
+	b := make([]byte, binary.MaxVarintLen64)
+	e.bo.PutUint64(b[:], uint64(v))
+
+	e.Write(b[:])
+}
